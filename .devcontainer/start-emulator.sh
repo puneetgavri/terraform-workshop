@@ -3,11 +3,15 @@
 set -euo pipefail
 
 # Wait for the Docker daemon (docker-in-docker can take a moment to start)
-for i in $(seq 1 30); do
+for i in $(seq 1 60); do
   docker info >/dev/null 2>&1 && break
   echo "Waiting for Docker daemon... ($i)"
   sleep 2
 done
+if ! docker info >/dev/null 2>&1; then
+  echo "ERROR: Docker daemon is not running. Rerun: bash .devcontainer/start-emulator.sh"
+  exit 1
+fi
 
 if [ "$(docker ps -q -f name=^floci$)" ]; then
   echo "Floci is already running."

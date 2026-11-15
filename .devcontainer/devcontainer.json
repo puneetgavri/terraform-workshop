@@ -19,7 +19,7 @@
     "4501": { "label": "Floci UI API", "onAutoForward": "silent" },
     "4566": { "label": "Floci AWS endpoint", "onAutoForward": "silent" }
   },
-  "postCreateCommand": "pip install --user checkov && curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash",
+  "postCreateCommand": "bash .devcontainer/install-tools.sh",
   "postStartCommand": "bash .devcontainer/start-emulator.sh",
   "customizations": {
     "vscode": {

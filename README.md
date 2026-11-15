@@ -75,9 +75,9 @@ git diff main solutions -- day1/01-s3
 
 | Problem | Fix |
 |---------|-----|
-| `connection refused` on `localhost:4566`, or Floci UI not loading | Restart the emulator: `bash .devcontainer/start-emulator.sh` |
+| `docker ps` shows no containers, `connection refused` on `localhost:4566`, or Floci UI not loading | Restart the emulator: `bash .devcontainer/start-emulator.sh` |
 | Resources/buckets "disappeared" | Floci keeps data **in memory** — it resets whenever the container or Codespace restarts. Delete the local state (`rm -f terraform.tfstate*`) and apply again. |
 | `day2/04-remote-state` fails to init | The `shopfast-tf-state` bucket was wiped by a restart. Recreate it (see that README). |
 | `BucketAlreadyExists` | A previous topic wasn't destroyed. Run `terraform destroy` there, or `aws s3 rb s3://<name> --force`. |
-| `tflint` / `checkov` not found | Rerun the setup: `pip install --user checkov` and `curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh \| bash` |
+| `tflint` / `checkov` not found | Rerun the setup: `bash .devcontainer/install-tools.sh` |
 | Check the containers | `docker ps` and `docker logs floci` |
