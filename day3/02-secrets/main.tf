@@ -16,8 +16,7 @@ resource "aws_ssm_parameter" "db_password" {
 }
 
 # STEP 2: uncomment this block (try it without "sensitive = true" first and read the error)
-# output "db_password" {
-#   value     = aws_ssm_parameter.db_password.value
-#   sensitive = true
-# }
-# END STEP 2
+output "db_password" {
+  value     = aws_ssm_parameter.db_password.value
+  sensitive = true
+}

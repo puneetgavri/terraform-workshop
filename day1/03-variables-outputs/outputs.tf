@@ -1,11 +1,10 @@
 # STEP 4: uncomment this block, then run apply
-# output "bucket_name" {
-#   description = "Name of the assets bucket"
-#   value       = aws_s3_bucket.assets.bucket
-# }
-#
-# output "bucket_arn" {
-#   description = "ARN of the assets bucket"
-#   value       = aws_s3_bucket.assets.arn
-# }
-# END STEP 4
+output "bucket_name" {
+  description = "Name of the assets bucket"
+  value       = aws_s3_bucket.assets.bucket
+}
+
+output "bucket_arn" {
+  description = "ARN of the assets bucket"
+  value       = aws_s3_bucket.assets.arn
+}

@@ -20,12 +20,11 @@ resource "aws_s3_bucket" "invoices" {
 }
 
 # STEP 2: uncomment this block (versioning only in prod, using a conditional)
-# resource "aws_s3_bucket_versioning" "invoices" {
-#   count  = var.environment == "prod" ? 1 : 0
-#   bucket = aws_s3_bucket.invoices.id
-#
-#   versioning_configuration {
-#     status = "Enabled"
-#   }
-# }
-# END STEP 2
+resource "aws_s3_bucket_versioning" "invoices" {
+  count  = var.environment == "prod" ? 1 : 0
+  bucket = aws_s3_bucket.invoices.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
