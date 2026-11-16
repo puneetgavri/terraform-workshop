@@ -10,8 +10,9 @@
    terraform init
    terraform plan          # nothing - Terraform doesn't know the bucket exists
    ```
-2. **Import it.** Uncomment the `import` block in `main.tf`, then let Terraform write the config for you:
+2. **Import it.** Add the `import` block, then let Terraform write the resource config for you:
    ```bash
+   cp steps/step2-import.tf .
    terraform plan -generate-config-out=imported.tf
    ```
    Open `imported.tf` and review it (tidy it up if you like — remove `null` attributes).
@@ -20,5 +21,5 @@
    terraform apply         # "1 to import, 0 to add, 0 to change, 0 to destroy"
    terraform state list
    ```
-4. **Plan again.** `terraform plan` → *No changes*. The bucket is now managed by Terraform. You can delete the `import` block — it has done its job.
+4. **Plan again.** `terraform plan` → *No changes*. The bucket is now managed by Terraform. You can now delete `step2-import.tf`, because the import block has done its job.
 5. **Clean up.** `terraform destroy` (add `force_destroy = true` to the bucket in `imported.tf` and apply first if it complains the bucket isn't empty), then `rm imported.tf`.

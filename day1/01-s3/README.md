@@ -4,19 +4,20 @@
 
 ## Steps
 
-1. **Create the bucket.** `main.tf` already has the bucket. Run `terraform init`, `terraform plan`, `terraform apply`. Find the bucket in the Floci UI.
-2. **Upload a file.** Uncomment the `STEP 2` block (`hello.txt`), then plan and apply. Notice only one resource is added.
-3. **Change a tag.** Change `Environment` from `"dev"` to `"staging"`. Plan shows `~` — an in-place update.
-4. **Rename the bucket.** Change the bucket name to `"shopfast-product-images-v2"`. Plan shows `-/+` — *forces replacement*. The object is replaced too, because it depends on the bucket.
-
-## Commands
-
-```bash
-cd day1/01-s3
-terraform init
-terraform plan
-terraform apply
-aws s3 ls                                  # the AWS CLI talks to Floci too
-aws s3 ls s3://shopfast-product-images
-terraform destroy
-```
+1. **Create the bucket.** `main.tf` already has the bucket.
+   ```bash
+   terraform init
+   terraform plan
+   terraform apply
+   ```
+   Find the bucket in the Floci UI, or run `aws s3 ls`.
+2. **Upload a file.**
+   ```bash
+   cp steps/step2-object.tf .
+   terraform apply
+   aws s3 ls s3://shopfast-product-images
+   ```
+   Only one resource is added; the bucket is untouched.
+3. **Change a tag.** In `main.tf`, change `Environment = "dev"` to `Environment = "staging"`. Run `terraform plan`: `~` means an in-place update. Apply.
+4. **Rename the bucket.** In `main.tf`, change the bucket name to `"shopfast-product-images-v2"`. Run `terraform plan`: `-/+` and *forces replacement*. A bucket can't be renamed, so Terraform destroys and recreates it, and the object with it. Apply.
+5. **Clean up.** `terraform destroy`

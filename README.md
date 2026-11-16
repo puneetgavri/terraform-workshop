@@ -42,30 +42,40 @@ AWS credentials (`test`/`test`), region and endpoint are preset as environment v
 
 ## How each topic works
 
-Every folder's `main.tf` (and sometimes other files) has **Step 1 active**. Later steps are already written but commented out:
+Each folder's `main.tf` holds **Step 1** only. Later steps are ready-made files in a `steps/` subfolder:
 
-```hcl
-# STEP 2: uncomment this block
-# resource "aws_s3_object" "hello" {
-#   ...
-# }
-# END STEP 2
+```
+day1/01-s3/
+├── main.tf              # Step 1
+├── providers.tf
+├── README.md            # the story and every step
+└── steps/
+    └── step2-object.tf  # copy in when you reach Step 2
 ```
 
-Tip: in VS Code, select the lines and press `Ctrl+/` (`Cmd+/` on Mac) to uncomment.
+Terraform only reads `.tf` files in the folder you run it from, so `steps/` is ignored until you copy a file in:
+
+```bash
+cp steps/step2-object.tf .
+```
+
+Steps that change a single value (a tag, a name, a list item) are described in the README; you make that edit by hand.
 
 Standard loop:
 
 ```bash
-cd day1/01-s3          # 1. go to the topic folder
-terraform init         # 2. once per folder
-terraform plan         # 3. see what will change
-terraform apply        # 4. make it so
-# 5. uncomment the next STEP, then plan + apply again ... repeat
-terraform destroy      # 6. always clean up at the end of the topic
+cd day1/01-s3                 # 1. go to the topic folder
+terraform init                # 2. once per folder
+terraform plan                # 3. see what will change
+terraform apply               # 4. make it so
+cp steps/step2-object.tf .    # 5. add the next step (or make the README's edit)
+terraform plan && terraform apply
+terraform destroy             # 6. always clean up at the end of the topic
 ```
 
-Stuck? The **`solutions`** branch has every step uncommented:
+> The Terraform extension may show red underlines in `steps/` files (for example, an unknown bucket reference). That's expected: those files only make sense once copied next to `main.tf`.
+
+Stuck? The **`solutions`** branch has every step already applied:
 
 ```bash
 git diff main solutions -- day1/01-s3

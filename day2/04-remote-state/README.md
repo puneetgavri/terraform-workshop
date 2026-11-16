@@ -11,8 +11,9 @@
    aws s3api put-bucket-versioning --bucket shopfast-tf-state \
      --versioning-configuration Status=Enabled
    ```
-3. **Move state to S3.** Uncomment `backend.tf`, then:
+3. **Move state to S3.**
    ```bash
+   cp steps/step3-backend.tf backend.tf
    terraform init -migrate-state     # answer "yes"
    aws s3 ls s3://shopfast-tf-state --recursive
    terraform plan                    # no changes - same state, new home
@@ -26,4 +27,4 @@
    - If a lock ever gets stuck: `terraform force-unlock <LOCK_ID>`
 5. **Clean up.** `terraform destroy`, then (optional) `aws s3 rb s3://shopfast-tf-state --force`.
 
-> Floci's data resets when the Codespace restarts. If the state bucket is gone, recreate it (step 2) or re-comment `backend.tf` and run `terraform init -migrate-state` again.
+> Floci's data resets when the Codespace restarts. If the state bucket is gone, recreate it (step 2) or delete `backend.tf` and run `terraform init -migrate-state` to go back to local state.

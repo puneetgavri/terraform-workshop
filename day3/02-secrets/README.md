@@ -12,8 +12,9 @@
    terraform apply
    aws ssm get-parameter --name /shopfast/prod/db_password --with-decryption
    ```
-2. **Sensitive outputs.** Uncomment the output. Remove `sensitive = true` and plan — Terraform refuses. Put it back, apply, then:
+2. **Sensitive outputs.** Copy in the output, remove `sensitive = true` from it and run `terraform plan`: Terraform refuses. Put it back, apply, then:
    ```bash
+   cp steps/step2-output.tf .
    terraform output                 # db_password = <sensitive>
    terraform output -raw db_password  # explicit request: shown
    ```

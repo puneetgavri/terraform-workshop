@@ -1,4 +1,4 @@
-# STEP 3: uncomment this block, then run: terraform init -migrate-state
+# Store state in S3 (on Floci), with S3-native locking.
 terraform {
   backend "s3" {
     bucket       = "shopfast-tf-state"

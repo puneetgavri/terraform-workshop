@@ -1,4 +1,4 @@
-# STEP 1: open a pull request that changes this folder and watch the CI workflow
+# Open a pull request that changes this folder and watch the CI workflow
 # (.github/workflows/terraform.yml) run fmt, validate, tflint, checkov and plan.
 resource "aws_s3_bucket" "reports" {
   bucket = "shopfast-ci-reports"

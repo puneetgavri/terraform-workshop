@@ -1,4 +1,4 @@
-# STEP 1: ordinary resources, state stored locally in terraform.tfstate.
+# Ordinary resources. State is stored locally in terraform.tfstate.
 resource "aws_s3_bucket" "payments" {
   bucket = "shopfast-payments"
 

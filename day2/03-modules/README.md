@@ -6,7 +6,9 @@
 
 ```
 03-modules/
-├── main.tf               # root: calls the module
+├── main.tf               # root: calls the module for dev
+├── steps/
+│   └── step2-prod.tf     # second module call, for prod
 └── modules/storage/      # the module: bucket, versioning, tags
     ├── main.tf
     ├── variables.tf      # inputs: name, environment, tags
@@ -16,5 +18,10 @@
 ## Steps
 
 1. **Dev.** `terraform init && terraform apply`. `terraform state list` shows `module.storage_dev.aws_s3_bucket.this`.
-2. **Prod.** Uncomment the `storage_prod` block. Run `terraform init` again (new module call), then plan and apply.
+2. **Prod.** A new module call needs `init` again:
+   ```bash
+   cp steps/step2-prod.tf .
+   terraform init
+   terraform apply
+   ```
 3. **Clean up.** `terraform destroy`

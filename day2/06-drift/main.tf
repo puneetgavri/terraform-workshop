@@ -1,4 +1,4 @@
-# STEP 1: the "official" configuration of ShopFast's checkout assets.
+# The "official" configuration of ShopFast's checkout assets.
 resource "aws_s3_bucket" "checkout" {
   bucket = "shopfast-checkout-assets"
 

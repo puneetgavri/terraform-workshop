@@ -1,13 +1,13 @@
 # Day 3 · 03 — Code quality and security
 
-**Story:** ShopFast is about to store customer data, and an auditor is coming. The current code works — but it's messy, has lint issues, and the bucket is wide open.
+**Story:** ShopFast is about to store customer data, and an auditor is coming. The current code works, but it's messy, has lint issues, and the bucket is wide open.
 
 ## Steps
 
 1. **Format and validate.**
    ```bash
    terraform init
-   terraform fmt -check -diff     # shows what's wrong, exit code 3
+   terraform fmt -check -diff     # shows what's wrong (exit code 3)
    terraform fmt                  # fixes it
    terraform validate
    ```
@@ -16,14 +16,21 @@
    tflint --init
    tflint
    ```
-   It reports an unused, untyped variable (`owner`) and a deprecated `"${...}"` interpolation. Fix both as the `STEP 2` comments say, then rerun `tflint` until it's clean.
+   tflint reports two problems in `main.tf`. Fix both, then rerun `tflint` until it's clean:
+   - `variable "owner"` is never used and has no type: delete it.
+   - `Environment = "${var.environment}"` uses deprecated interpolation: change it to `Environment = var.environment`.
 3. **Security scan.**
    ```bash
-   checkov -d .
+   checkov -d . --skip-path steps
    ```
-   Note the failures: no public access block, no encryption, no versioning. Uncomment the `STEP 3` block and run `checkov -d .` again — those checks now pass.
+   (`--skip-path steps` stops checkov from scanning the step files you haven't copied in yet.)
 
-   Some checks (access logging, cross-region replication, KMS, event notifications, lifecycle) still fail. In a real project you'd fix them or skip them with a reason:
+   Note the failures: no public access block (`CKV2_AWS_6`), no KMS encryption (`CKV_AWS_145`), no versioning (`CKV_AWS_21`). Add the fixes and scan again:
+   ```bash
+   cp steps/step3-security.tf .
+   checkov -d . --skip-path steps
+   ```
+   Those three now pass. Four checks still fail: access logging, cross-region replication, event notifications and lifecycle. In a real project you'd fix them, or skip them with a reason:
    ```hcl
    resource "aws_s3_bucket" "customer_data" {
      #checkov:skip=CKV_AWS_144:Single-region workshop

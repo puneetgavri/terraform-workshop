@@ -1,4 +1,4 @@
-# STEP 1: the bucket name includes the current workspace.
+# The bucket name includes the current workspace.
 resource "aws_s3_bucket" "site" {
   bucket = "shopfast-${terraform.workspace}-site"
 

@@ -1,4 +1,4 @@
-# STEP 1: a bucket and a file. Apply, then explore the state.
+# A bucket and a file. Apply, then explore the state.
 resource "aws_s3_bucket" "orders_export" {
   bucket = "shopfast-orders-export"
 

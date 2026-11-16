@@ -8,8 +8,10 @@
    ```bash
    terraform output bucket_name
    ```
-2. **Read an object.** Uncomment the `STEP 2` block. It uploads `config.txt` and reads it back with the `aws_s3_object` data source. Apply, then:
+2. **Read an object.** This step uploads `config.txt` and reads it back with the `aws_s3_object` data source.
    ```bash
+   cp steps/step2-read-object.tf .
+   terraform apply
    terraform output config_content
    ```
 3. **Clean up.** `terraform destroy`
