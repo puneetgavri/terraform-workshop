@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "reports" {
   bucket = "shopfast-ci-reports"
 
   tags = {
-    Project = "shop"
+    Project = "puneet"
   }
 }
 
